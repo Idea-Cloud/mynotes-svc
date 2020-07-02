@@ -1,0 +1,49 @@
+version: "3.3"
+services:
+  node:
+    image: ${NODE_IMAGE}
+    container_name: ${STACK_NAME}.node
+    user: ${LOCAL_USER_UID}:${LOCAL_USER_GID}
+    command: /bin/bash -c "while [ 1 ]; do sleep 3600; done"
+    working_dir: ${DATA_PATH_PREFIX}
+    tty: true
+    ports:
+      - 9191:8080
+    volumes:
+      - ${PWD}:${DATA_PATH_PREFIX}:delegated
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    links:
+      - redis:redis
+
+  api:
+#    build:
+#      dockerfile: app/Dockerfile
+#      context: .
+#      args:
+#        - NODE_ENV=${NODE_ENV}
+#        - NODE_IMAGE=${NODE_IMAGE}
+    image: ${NODE_IMAGE}
+    container_name: ${STACK_NAME}.api
+    working_dir: ${DATA_PATH_PREFIX}/app
+    command: node api/api.js
+    user: ${LOCAL_USER_UID}:${LOCAL_USER_GID}
+    tty: true
+    ports:
+      - 9090:8080
+    volumes:
+        - ${PWD}:${DATA_PATH_PREFIX}:delegated
+    environment:
+        - NODE_ENV=prod
+        - PORT=8080
+    links:
+      - redis:redis
+
+  redis:
+    image: ${REDIS_IMAGE}
+    container_name: ${STACK_NAME}.redis
+    command: redis-server --save "" --appendonly no
+    user: ${LOCAL_USER_UID}:${LOCAL_USER_GID}
+    tty: true
+    ports:
+      - 9093:6379

@@ -1,0 +1,53 @@
+{
+   "kind":"ReplicationController",
+   "apiVersion":"v1",
+   "metadata":{
+      "name":"api",
+      "labels":{
+         "app":"api"
+      }
+   },
+   "spec":{
+      "replicas":1,
+      "selector":{
+         "app":"api"
+      },
+      "template":{
+         "metadata":{
+            "labels":{
+               "app":"api"
+            }
+         },
+         "spec":{
+            "containers":[
+               {
+                  "name":"api",
+                  "image":"api",
+                  "ports":[
+                     {
+                        "name":"http-server",
+                        "containerPort":8080
+                     }
+                  ],
+                  "env": [
+                    {
+                      "name": "API_PORT",
+                      "value": "${api_port}"
+                    }
+                  ]
+               },
+               {
+                 "name":"redis",
+                 "image":"redis",
+                 "ports":[
+                    {
+                       "name":"redis",
+                       "containerPort":5379
+                    }
+                 ]
+               }
+            ]
+         }
+      }
+   }
+}
