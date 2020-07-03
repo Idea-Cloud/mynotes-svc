@@ -14,9 +14,13 @@
 ########################################################################################################################
 
 build-docker-image:
-	@echo "${YELLOW}Building Docker image \"${TARGET_DOCKER_REGISTRY}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}\"${RESET}"
-	@docker build -t ${TARGET_DOCKER_REGISTRY}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG} ./app
+	@echo "${YELLOW}Building Docker image \"${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}\"${RESET}"
+	@docker build --build-arg NODE_IMAGE=${NODE_IMAGE} -t ${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG} ./app
 
 push-docker-image:
-	@echo "${YELLOW}Publishing Docker image: \"${TARGET_DOCKER_REGISTRY}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}\"${RESET}"
-	@docker push ${TARGET_DOCKER_REGISTRY}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}
+	@echo "${YELLOW}Publishing Docker image: \"${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}\"${RESET}"
+	@docker push ${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}
+
+login-to-ecr:
+	@echo "${YELLOW}Login to: \"${AWS_ECR}\"${RESET}"
+	AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ECR}

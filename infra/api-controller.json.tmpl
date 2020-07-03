@@ -22,7 +22,13 @@
             "containers":[
                {
                   "name":"api",
-                  "image":"api",
+                  "image":"${api_image}",
+                  "resources": {
+                    "limits": {
+                      "memory": "64Mi",
+                      "cpu": "50m"
+                    }
+                  },
                   "ports":[
                      {
                         "name":"http-server",
@@ -33,16 +39,37 @@
                     {
                       "name": "API_PORT",
                       "value": "${api_port}"
+                    },
+                    {
+                      "name": "REDIS_PORT",
+                      "value": "${redis_port}"
+                    },
+                    {
+                      "name": "REDIS_HOST",
+                      "value": "${redis_host}"
                     }
                   ]
                },
                {
                  "name":"redis",
-                 "image":"redis",
+                 "image":"${redis_image}",
+                 "resources": {
+                   "limits": {
+                     "memory": "64Mi",
+                     "cpu": "50m"
+                   }
+                 },
+                 "command":[
+                   "redis-server",
+                   "--save",
+                   "\"\"",
+                   "--appendonly",
+                   "no"
+                 ],
                  "ports":[
                     {
                        "name":"redis",
-                       "containerPort":5379
+                       "containerPort":6379
                     }
                  ]
                }

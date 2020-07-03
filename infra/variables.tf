@@ -46,8 +46,27 @@ variable "ecr_tfstate_key" {
 # API
 #
 ################################################################################
+variable "api_image" {
+  type        = string
+  description = "API docker image name"
+}
 
 variable "api_port" {
   type        = string
   description = "API port listen to"
+}
+
+variable "redis_image" {
+  type        = string
+  description = "REDIS docker image name"
+}
+
+variable "redis_port" {
+  type        = number
+  description = "REDIS port"
+}
+
+variable "redis_host" {
+  type        = string
+  description = "REDIS host"
 }

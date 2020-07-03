@@ -7,7 +7,7 @@
 # file that was distributed with this source code.
 ################################################################################
 
-TFSTATE_KEY=${WP_TFSTATE_KEY}
+TFSTATE_KEY=${API_TFSTATE_KEY}
 
 include ../makefiles/vars.Makefile
 

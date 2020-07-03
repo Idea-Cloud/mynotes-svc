@@ -13,20 +13,21 @@ services:
       - ${PWD}:${DATA_PATH_PREFIX}:delegated
     environment:
       NODE_ENV: ${NODE_ENV}
+      PORT: ${API_PORT}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_HOST: ${REDIS_HOST}
     links:
       - redis:redis
 
   api:
-#    build:
-#      dockerfile: app/Dockerfile
-#      context: .
-#      args:
-#        - NODE_ENV=${NODE_ENV}
-#        - NODE_IMAGE=${NODE_IMAGE}
-    image: ${NODE_IMAGE}
+    build:
+      dockerfile: ${PWD}/app/Dockerfile
+      context: ./app
+      args:
+        - NODE_IMAGE=${NODE_IMAGE}
     container_name: ${STACK_NAME}.api
-    working_dir: ${DATA_PATH_PREFIX}/app
-    command: node api/api.js
+    working_dir: ${DATA_PATH_PREFIX}
+    command: node app/api/api.js
     user: ${LOCAL_USER_UID}:${LOCAL_USER_GID}
     tty: true
     ports:
@@ -35,7 +36,9 @@ services:
         - ${PWD}:${DATA_PATH_PREFIX}:delegated
     environment:
         - NODE_ENV=prod
-        - PORT=8080
+        - PORT=${API_PORT}
+        - REDIS_PORT=${REDIS_PORT}
+        - REDIS_HOST=${REDIS_HOST}
     links:
       - redis:redis
 

@@ -14,7 +14,7 @@ const redis = require('redis')
 
 exports.ClientFactory = {
     createClient: () => {
-        const client = redis.createClient(6379, 'redis', {})
+        const client = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST, {})
 
         client.on('error', function(err) {
             console.log('redis', 'Create redis client fail', { name: 'redis', error: err })

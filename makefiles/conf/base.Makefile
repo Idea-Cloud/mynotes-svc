@@ -9,6 +9,16 @@
 
 ################################################################################
 #
+# AWS Configuration
+#
+################################################################################
+#AWS_ACCESS_KEY_ID           ?=
+#AWS_SECRET_ACCESS_KEY       ?=
+#AWS_DEFAULT_REGION          ?=
+#AWS_ECR                     ?=
+
+################################################################################
+#
 # Dockerfile Configuration
 #
 ################################################################################
@@ -17,17 +27,8 @@ TARGET_IMAGE_NAME           ?= ideacloud-terraform
 DOCKER_TAG                  ?= $(shell git log --pretty=format:'%h' -n 1)
 DOCKER_IMAGE_NAME           ?= ${TARGET_DOCKER_REGISTRY}/${TARGET_IMAGE_NAME}:1.0.0
 
-API_TARGET_IMAGE_NAME       ?= ideacloud-mynotes
-API_DOCKER_IMAGE_NAME       ?= ${TARGET_DOCKER_REGISTRY}/${API_TARGET_IMAGE_NAME}:1.0.0
-
-################################################################################
-#
-# AWS Configuration
-#
-################################################################################
-#AWS_ACCESS_KEY_ID           ?=
-#AWS_SECRET_ACCESS_KEY       ?=
-#AWS_DEFAULT_REGION          ?=
+API_TARGET_IMAGE_NAME       ?= test
+API_DOCKER_IMAGE_NAME       ?= ${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG}
 
 ################################################################################
 #
@@ -58,3 +59,5 @@ KUBECONFIG                  ?= ${ROOT_DIR}/.config/config-${ENVIRONMENT}
 #
 ################################################################################
 #API_PORT                    ?=
+#REDIS_PORT                  ?=
+#REDIS_HOST                  ?=

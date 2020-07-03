@@ -11,13 +11,24 @@
 export PROD_AWS_ACCESS_KEY_ID=<aws_access_key_id> \
 PROD_AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
 PROD_AWS_DEFAULT_REGION=<aws_default_region> \
+PROD_AWS_ECR=<aws_ecr> \
 TARGET_ENV=prod; \
-make install && AUTO_APPROVE=1 make apply
+make install && make build-docker-image && make login-to-ecr && make push-docker-image && AUTO_APPROVE=1 make apply
 ```
 
 ## Install (build image with deps)
 ```bash
 make install
+```
+
+## Build image and push it to ECR
+```bash
+PROD_AWS_ACCESS_KEY_ID=<aws_access_key_id> \
+PROD_AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
+PROD_AWS_DEFAULT_REGION=<aws_default_region> \
+PROD_AWS_ECR=<aws_ecr> \
+TARGET_ENV=prod; \
+make build-docker-image && make login-to-ecr && make push-docker-image
 ```
 
 ## Apply

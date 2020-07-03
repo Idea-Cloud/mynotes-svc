@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
   make \
   unzip \
   curl \
+  git \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p  /usr/local/terraform \

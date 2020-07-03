@@ -22,23 +22,24 @@ setup:
 #	@echo "${YELLOW}Login to AWS ECR${RESET}"
 #	@${ECR_LOGIN_CMD}
 	@echo "${YELLOW}Create docker-compose environnement${RESET}"
-	@${DOCKER_COMPOSE} up --remove-orphans -d node redis api > /dev/null
+	${DOCKER_COMPOSE} up --remove-orphans -d node redis api > /dev/null
 
 	@make create-local-user-in-node
 	@make create-local-user-in-api
 
 build:
-	@${DOCKER_COMPOSE} build --build-arg NODE_ENV="${NODE_ENV}"
+	pwd
+	@${DOCKER_COMPOSE} build
 
 clean: ##@setup Remove all components
 	@echo "${YELLOW}Stop and remove docker-compose${RESET}"
 	@make stop
 	@${DOCKER_COMPOSE} rm -f
 
-# aws sts get-session-token --serial-number arn:aws:iam::888041452335:mfa/gsick --token-code <code-generated-by-MFA-device>
+# aws sts get-session-token --serial-number arn:aws:iam::xxxxxxxxxxx:mfa/gsick --token-code <code-generated-by-MFA-device>
 # aws configure set aws_session_token <the-session-token-in-the-output-of-above-command>
 #ecr:
-#	AWS_PROFILE=ecr-deepreach aws ecr get-login-password \
+#	AWS_PROFILE=my_profile aws ecr get-login-password \
 #	--region ${ECR_AWS_REGION} \
 #	| docker login \
 #	--username AWS \

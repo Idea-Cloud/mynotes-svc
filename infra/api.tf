@@ -15,9 +15,13 @@ resource "null_resource" "create-kubeconfig" {
 
 locals {
   api-controller-content = templatefile("${path.module}/api-controller.json.tmpl", {
-    api_port = var.api_port
+    api_image   = var.api_image,
+    api_port    = var.api_port,
+    redis_image = var.redis_image,
+    redis_port  = var.redis_port,
+    redis_host  = var.redis_host
   })
-  api-service-content = templatefile("${path.module}/api-service.json.tmpl")
+  api-service-content = templatefile("${path.module}/api-service.json.tmpl", {})
 }
 
 resource "null_resource" "apply-api-controller" {

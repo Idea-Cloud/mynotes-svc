@@ -22,21 +22,21 @@ include ./makefiles/dependency.Makefile
 include ./makefiles/publish.Makefile
 
 # ENV from cli/makefile inject in docker
-LOCAL_ENV := "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} TARGET_ENV=${TARGET_ENV} AUTO_APPROVE=${AUTO_APPROVE} API_PORT=${API_PORT}"
+LOCAL_ENV := "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} AWS_ECR=${AWS_ECR} TARGET_ENV=${TARGET_ENV} AUTO_APPROVE=${AUTO_APPROVE} API_PORT=${API_PORT}"
 
 plan:
 	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=_plan
 
 _plan:
 	@echo "############## API ##############"
-	@cd app && make init && make plan
+	@cd infra && make init && make plan
 
 apply:
 	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=_apply
 
 _apply:
 	@echo "############## API ##############"
-	@cd app && make init && make apply
+	@cd infra && make init && make apply
 	@echo "############## kube svc ##############"
 	@make kube args="get svc"
 	@echo "############## kube nodes / pods ##############"
@@ -48,7 +48,7 @@ destroy:
 
 _destroy:
 	@echo "############## API ##############"
-	@cd app && make init && make destroy
+	@cd infra && make init && make destroy
 
 import-state-%: # make import-state-state-bucket args='aws_s3_bucket.terraform_state kjhsdfnbvuio-prod-tfstates'
 	@echo "############## IMPORT STATE ##############"
@@ -59,7 +59,7 @@ format:
 
 _format:
 	@echo "############## API ##############"
-	@cd app && make format
+	@cd infra && make format
 
 update-version:
 	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=kube args="set image deployment/api api:${args}"

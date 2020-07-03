@@ -22,6 +22,7 @@
 AWS_ACCESS_KEY_ID           ?= "${PROD_AWS_ACCESS_KEY_ID}"
 AWS_SECRET_ACCESS_KEY       ?= "${PROD_AWS_SECRET_ACCESS_KEY}"
 AWS_DEFAULT_REGION          ?= "${PROD_AWS_DEFAULT_REGION}"
+AWS_ECR                     ?= "${PROD_AWS_ECR}"
 
 ################################################################################
 #
@@ -45,3 +46,5 @@ ENVIRONMENT                 ?= "prod"
 #
 ################################################################################
 API_PORT                    ?= 8080
+REDIS_PORT                  ?= 6379
+REDIS_HOST                  ?= redis

@@ -23,7 +23,7 @@ async function main() {
     try {
         await redisClient.set('next_key', 0)
 
-        const port = 8080
+        const port = process.env.PORT
         api.listen(port, '0.0.0.0')
 
         console.log(`app started. Listening on port ${port}`)

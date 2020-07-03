@@ -44,7 +44,7 @@ ECR_AWS_REGION     ?=
 ECR_AWS_ACCOUNT_ID ?=
 
 REDIS_IMAGE  := redis:6.0.5-alpine
-NODE_IMAGE   := node:10.15.3
+NODE_IMAGE   := node:10.16.3-buster
 
 NODE_ENV ?= development
 
@@ -74,6 +74,7 @@ TERRAFORM_VARS := export \
     AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
     AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
     AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} \
+		AWS_ECR=${AWS_ECR} \
 		KUBECONFIG=${KUBECONFIG} \
 		TF_PLUGIN_CACHE_DIR="${ROOT_DIR}/.plugin-cache" \
 		TF_VAR_region=${TFSTATE_REGION} \
@@ -81,8 +82,13 @@ TERRAFORM_VARS := export \
     TF_VAR_tfstate_bucket=${TFSTATE_BUCKET} \
     TF_VAR_vpc_tfstate_key=${VPC_TFSTATE_KEY} \
     TF_VAR_eks_tfstate_key=${EKS_TFSTATE_KEY} \
+		TF_VAR_ecr_tfstate_key=${ECR_TFSTATE_KEY} \
 		TF_VAR_api_tfstate_key=${API_TFSTATE_KEY} \
+		TF_VAR_api_image=${AWS_ECR}/${API_TARGET_IMAGE_NAME}:${DOCKER_TAG} \
 		TF_VAR_api_port=${API_PORT} \
+		TF_VAR_redis_image=${REDIS_IMAGE} \
+		TF_VAR_redis_port=${REDIS_PORT} \
+		TF_VAR_redis_host=${REDIS_HOST} \
     TF_VAR_environment=${ENVIRONMENT};
 TERRAFORM_CMD := ${TERRAFORM_VARS} terraform
 
@@ -106,7 +112,10 @@ DOCKER_COMPOSE_VARS ?= export \
 	NODE_IMAGE=${NODE_IMAGE} \
 	REDIS_IMAGE=${REDIS_IMAGE} \
 	DATA_PATH_PREFIX=${DATA_PATH_PREFIX} \
-	NODE_ENV=${NODE_ENV};
+	NODE_ENV=${NODE_ENV} \
+	API_PORT=${API_PORT} \
+	REDIS_PORT=${REDIS_PORT} \
+	REDIS_HOST=${REDIS_HOST};
 
 DOCKER_COMPOSE_CMD ?= docker-compose -p ${STACK_NAME} -f ${DOCKER_COMPOSE_FILE}
 
