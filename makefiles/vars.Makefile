@@ -88,7 +88,6 @@ TERRAFORM_VARS := export \
 		TF_VAR_api_port=${API_PORT} \
 		TF_VAR_redis_image=${REDIS_IMAGE} \
 		TF_VAR_redis_port=${REDIS_PORT} \
-		TF_VAR_redis_host=${REDIS_HOST} \
     TF_VAR_environment=${ENVIRONMENT};
 TERRAFORM_CMD := ${TERRAFORM_VARS} terraform
 

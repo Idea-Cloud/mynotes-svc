@@ -4,9 +4,9 @@
 * Scripts only tested on Fedora 32 (5.6.18-300.fc32.x86_64)
 * Docker version > 19.03.9
 * GNU Make > 4.2.1
-* Must have a eks infra installed with https://github.com/Idea-Cloud/eks-infra
+* Must have a eks infra installed with https://github.com/Idea-Cloud/eks-infra (and get the root path of the ECR)
 
-## Quick install and setup for impatient people
+## Quick install, setup and test for impatient people
 ```bash
 export PROD_AWS_ACCESS_KEY_ID=<aws_access_key_id> \
 PROD_AWS_SECRET_ACCESS_KEY=<aws_secret_access_key> \
@@ -14,6 +14,10 @@ PROD_AWS_DEFAULT_REGION=<aws_default_region> \
 PROD_AWS_ECR=<aws_ecr> \
 TARGET_ENV=prod; \
 make install && make build-docker-image && make login-to-ecr && make push-docker-image && AUTO_APPROVE=1 make apply
+```
+* get the `EXTERNAL-IP` of api's svc and test
+```bash
+API_HOSTNAME=<EXTERNAL-IP> make test-func
 ```
 
 ## Install (build image with deps)
