@@ -15,10 +15,14 @@ PROD_AWS_ECR=<aws_ecr> \
 TARGET_ENV=prod; \
 make install && make build-docker-image && make login-to-ecr && make push-docker-image && AUTO_APPROVE=1 make apply
 ```
+
 * get the `EXTERNAL-IP` of api's svc and test
 ```bash
 API_HOSTNAME=<EXTERNAL-IP> make test-func
 ```
+* create content: POST a json body to http://<EXTERNAL-IP>/api/v1/content
+* get content: GET from http://<EXTERNAL-IP>/api/v1/content/{id}
+
 
 ## Install (build image with deps)
 ```bash
