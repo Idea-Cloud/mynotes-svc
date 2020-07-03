@@ -26,14 +26,14 @@ services:
       args:
         - NODE_IMAGE=${NODE_IMAGE}
     container_name: ${STACK_NAME}.api
-    working_dir: ${DATA_PATH_PREFIX}
-    command: node app/api/api.js
+#    working_dir: ${DATA_PATH_PREFIX}
+#  command: node app/api/api.js
     user: ${LOCAL_USER_UID}:${LOCAL_USER_GID}
     tty: true
     ports:
       - 9090:8080
-    volumes:
-        - ${PWD}:${DATA_PATH_PREFIX}:delegated
+#    volumes:
+#        - ${PWD}:${DATA_PATH_PREFIX}:delegated
     environment:
         - NODE_ENV=prod
         - PORT=${API_PORT}

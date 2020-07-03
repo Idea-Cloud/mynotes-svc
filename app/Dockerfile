@@ -9,14 +9,15 @@ ENV REDIS_HOST=redis
 
 #RUN apk add --no-cache git
 
-RUN mkdir /code
-COPY ["./package.json", "./yarn.lock", "/code/"]
-
+RUN mkdir -p /code/app
 WORKDIR /code
 
+# Copy source code
+COPY ["./package.json", "./yarn.lock", "/code/"]
+COPY ./api /code/app/api
+COPY ./module /code/app/module
+
+# Install deps
 RUN yarn install --prod
 
-# Copy source code
-COPY ./api /code/api
-
-CMD ["node", "api/api.js"]
+CMD ["node", "app/api/api.js"]

@@ -22,10 +22,10 @@ setup:
 #	@echo "${YELLOW}Login to AWS ECR${RESET}"
 #	@${ECR_LOGIN_CMD}
 	@echo "${YELLOW}Create docker-compose environnement${RESET}"
-	${DOCKER_COMPOSE} up --remove-orphans -d node redis api > /dev/null
+	@${DOCKER_COMPOSE} up --remove-orphans -d node redis api > /dev/null
 
 	@make create-local-user-in-node
-	@make create-local-user-in-api
+#	@make create-local-user-in-api
 
 build:
 	pwd

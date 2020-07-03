@@ -1,7 +1,7 @@
 #!/bin/sh
 
-HOSTNAME="a41497af47e374104ab3bdf16dcae3a2-565561707.eu-west-3.elb.amazonaws.com"
-#HOSTNAME="127.0.0.1:9090"
+#HOSTNAME="a41497af47e374104ab3bdf16dcae3a2-565561707.eu-west-3.elb.amazonaws.com"
+HOSTNAME="127.0.0.1:9090"
 
 CONTENT='{"content": "a long long message"}'
 

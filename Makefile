@@ -62,7 +62,7 @@ _format:
 	@cd infra && make format
 
 update-version:
-	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=kube args="set image deployment/api api:${args}"
+	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=kube args="set image deployment/api api=${args} --record"
 
 getsvc:
 	@make make-in-docker LOCAL_ENV=${LOCAL_ENV} MAKE_RULE=kube args="get svc"
